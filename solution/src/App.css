@@ -68,6 +68,11 @@ input, select {
 }
 
 @media (max-width: 700px) {
+  .action-buttons {
+    justify-content: flex-start;
+    padding-top: 8px;
+  }
+
   .app {
     margin: 4px;
   }
