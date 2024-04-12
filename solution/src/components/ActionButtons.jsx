@@ -1,18 +1,10 @@
 import Button from './Button';
 
-export default function ActionButtons() {
-  function clearName() {
-    alert('cleared!');
-  }
-
-  function addName() {
-    alert('added!');
-  }
-
+export default function ActionButtons({ onClear, onAdd }) {
   return (
     <div className="action-buttons">
-      <Button onClick={clearName} buttonName="Clear" />
-      <Button onClick={addName} buttonName="Add" />
+      <Button onClick={onClear} buttonName="Clear" />
+      <Button onClick={onAdd} buttonName="Add" />
     </div>
   );
 }

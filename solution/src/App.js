@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import ActionButtons from './components/ActionButtons';
+import LocationsDropdown from './components/LocationsDropdown';
 import NameInput from './components/NameInput';
 import PeopleTable from './components/PeopleTable';
 
@@ -12,7 +13,21 @@ function App() {
   const [namesList, setNamesList] = useState([]);
   const [currentNameInput, setCurrentNameInput] = useState('');
   const [isValidCurrentNameInput, setIsValidCurrentNameInput] = useState(true);
+  const [locationsList, setLocationsList] = useState([]);
   const [currentLocationInput, setCurrentLocationInput] = useState('');
+
+  useEffect(() => {
+    const locationsAsync = async () => {
+      try {
+        const locations = await getLocations();
+        setLocationsList(locations);
+        // setCurrentLocationInput(locations[0]);
+      } catch(error) {
+        console.log('There was an error fetching the locations: ' + error);
+      }
+    }
+    locationsAsync();
+  })
 
   const validateNameInput = async (nameInput) => {
     try {
@@ -29,18 +44,24 @@ function App() {
     validateNameInput(nameInput);
   }
 
-  // useEffect(() => {
-  //   let waiting = true;
-  //   isNameValid(currentNameInput).then(valid => {
-  //     if (!waiting) {
-  //       setIsValidCurrentNameInput(valid);
-  //       console.log(isNameValid);
-  //     }
-  //   });
-  //   return () => {
-  //     waiting = true;
-  //   }
-  // }, [currentNameInput]);
+  // const onUpdateLocationInput = (e) => {
+  //   console.log(e.target.value);
+  //   setCurrentLocationInput(e.target.value);
+  // }
+
+  const onClear = () => {
+    setCurrentNameInput('');
+    setCurrentLocationInput('');
+  }
+
+  const onAdd = () => {
+    let currentNamesList = namesList;
+    currentNamesList.push({
+      'name': currentNameInput,
+      'location': currentLocationInput
+    });
+    setNamesList(currentNamesList)
+  }
 
   return (
     <div className="App">
@@ -49,7 +70,12 @@ function App() {
         onUpdateNameInput={onUpdateNameInput}
         isValidCurrentNameInput={isValidCurrentNameInput}
       />
-      <ActionButtons />
+      <LocationsDropdown
+        locationsList={locationsList}
+        currentLocationInput={currentLocationInput}
+        onUpdateLocationInput={setCurrentLocationInput}
+      />
+      <ActionButtons onClear={onClear} onAdd={onAdd} />
       <PeopleTable peopleData={namesList} />
     </div>
   );

@@ -1,6 +1,6 @@
 import PeopleTableRow from './PeopleTableRow';
 
-export default function PeopleTable({ peopleData = [{'name': 'bob', 'location': 'canada'}] }) {
+export default function PeopleTable({ peopleData }) {
   return (
     <table>
       <thead>
