@@ -1,8 +1,8 @@
-export default function PeopleTableRow({ name, location }) {
+export default function PeopleTableRow({ i, data }) {
   return (
-    <tr>
-      <td>{name}</td>
-      <td>{location}</td>
+    <tr className={i % 2 === 0 ? '' : 'gray'}>
+      <td>{data.name}</td>
+      <td>{data.location}</td>
     </tr>
   );
 }

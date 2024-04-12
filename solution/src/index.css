@@ -11,11 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.duplicate-name-warning {
-  color: #EE4B2B;
-}
-
-.duplicate-name-warning.hide {
-  display: none;
-}

@@ -1,18 +1,18 @@
-export default function LocationsDropdown({ locationsList, currentLocationInput, onUpdateLocationInput }) {
-  const update = (e) => {
-    alert('update');
-    onUpdateLocationInput(e.target.value);
-  }
+export default function LocationsDropdown({ currentLocationInput, onUpdateLocationInput, locationsList }) {
   return (
-    <select
-      value={currentLocationInput}
-      onChange={update}>
-        <option defaultValue disabled>Select Country</option>
-        {locationsList.map((location, i) =>
-          <option value={location} key={i}>{location}</option>
-        )}
-    </select>
+    <div className="input-holder">
+      <div className="input-label">
+        <h2>Location</h2>
+      </div>
+      <div className="input">
+        <select
+          value={currentLocationInput}
+          onChange={(e) => onUpdateLocationInput(e.target.value)}>
+            {locationsList.map((location, i) =>
+              <option value={location} key={i}>{location}</option>
+            )}
+        </select>
+      </div>
+    </div>
   );
 }
-// ? currentLocationInput : locationsList[0]
-// (e) => onUpdateLocationInput(e.target.value)

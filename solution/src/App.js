@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { debounce } from 'lodash';
 
 import ActionButtons from './components/ActionButtons';
 import LocationsDropdown from './components/LocationsDropdown';
@@ -14,22 +15,22 @@ function App() {
   const [currentNameInput, setCurrentNameInput] = useState('');
   const [isValidCurrentNameInput, setIsValidCurrentNameInput] = useState(true);
   const [locationsList, setLocationsList] = useState([]);
-  const [currentLocationInput, setCurrentLocationInput] = useState('');
+  const [location, setLocation] = useState('');
 
   useEffect(() => {
     const locationsAsync = async () => {
       try {
         const locations = await getLocations();
         setLocationsList(locations);
-        // setCurrentLocationInput(locations[0]);
+        setLocation(locations[0]);
       } catch(error) {
         console.log('There was an error fetching the locations: ' + error);
       }
     }
     locationsAsync();
-  })
+  }, [])
 
-  const validateNameInput = async (nameInput) => {
+  const validateName = async (nameInput) => {
     try {
       const valid = await isNameValid(nameInput);
       setIsValidCurrentNameInput(valid);
@@ -38,42 +39,43 @@ function App() {
     }
   }
 
+  const debouncedValidateName = debounce((nameInput) => {
+    validateName(nameInput);
+  }, 100);
+
   const onUpdateNameInput = (e) => {
+    e.preventDefault();
     const nameInput = e.target.value;
     setCurrentNameInput(nameInput);
-    validateNameInput(nameInput);
+    debouncedValidateName(nameInput);
   }
-
-  // const onUpdateLocationInput = (e) => {
-  //   console.log(e.target.value);
-  //   setCurrentLocationInput(e.target.value);
-  // }
 
   const onClear = () => {
     setCurrentNameInput('');
-    setCurrentLocationInput('');
+    setLocation('');
   }
 
   const onAdd = () => {
     let currentNamesList = namesList;
     currentNamesList.push({
       'name': currentNameInput,
-      'location': currentLocationInput
+      'location': location
     });
-    setNamesList(currentNamesList)
+    setNamesList(currentNamesList);
+    onClear();
   }
 
   return (
-    <div className="App">
+    <div className="app">
       <NameInput
         value={currentNameInput}
         onUpdateNameInput={onUpdateNameInput}
         isValidCurrentNameInput={isValidCurrentNameInput}
       />
       <LocationsDropdown
+        currentLocationInput={location}
+        onUpdateLocationInput={setLocation}
         locationsList={locationsList}
-        currentLocationInput={currentLocationInput}
-        onUpdateLocationInput={setCurrentLocationInput}
       />
       <ActionButtons onClear={onClear} onAdd={onAdd} />
       <PeopleTable peopleData={namesList} />

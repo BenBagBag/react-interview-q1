@@ -2,8 +2,8 @@ import PeopleTableRow from './PeopleTableRow';
 
 export default function PeopleTable({ peopleData }) {
   return (
-    <table>
-      <thead>
+    <table className="people-table">
+      <thead className="people-table-header">
         <tr>
           <td>Name</td>
           <td>Location</td>
@@ -11,7 +11,7 @@ export default function PeopleTable({ peopleData }) {
       </thead>
       <tbody>
         {peopleData.map((data, i) =>
-          <PeopleTableRow {...data} key={i} />
+          <PeopleTableRow data={data} i={i} key={i} />
         )}
       </tbody>
     </table>

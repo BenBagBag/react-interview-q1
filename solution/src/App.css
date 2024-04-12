@@ -1,38 +1,84 @@
-.App {
-  text-align: center;
+input, select {
+  width: 12rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.action-buttons {
+  align-self: stretch;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin: 0 20%;
 }
 
-.App-link {
-  color: #61dafb;
+.button {
+  margin: 4px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.duplicate-name-warning {
+  color: #EE4B2B;
+}
+
+.duplicate-name-warning.hide {
+  display: none;
+}
+
+.gray td {
+  background-color: #aaadb3;
+}
+
+.input {
+  width: 36rem;
+}
+
+.input-holder {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.input-label {
+  text-align: right;
+  padding-right: 8px;
+  width: 24rem;
+}
+
+.people-table {
+  margin-top: 12px;
+}
+
+.people-table td {
+  width: 20rem;
+  border: 2px solid #000000;
+}
+
+.people-table-header {
+  font-weight: bold;
+  background-color: #aaadb3;
+}
+
+.people-table-header td {
+  border: 2px solid #000000;
+}
+
+@media (max-width: 700px) {
+  .app {
+    margin: 4px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .input-holder {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .input-label {
+    text-align: left;
   }
 }
